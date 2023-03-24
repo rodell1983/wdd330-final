@@ -1,22 +1,22 @@
-let card1 = document.getElementById("card1");
-let card2 = document.getElementById("card2");
+
 let search = document.getElementById("search");
 
-search.addEventListener("click", searchCharacter);
+search.addEventListener("click", searchArticle('asadsa'));
 
-let allArticles = [];
 
 getArticles();
-
-allArticles.forEach((element) => createCard(element));
-console.log("test");
-
-
 
 function createCard(article) {
   let cards = document.getElementById("cards");
 
-  cards.innerHTML += `<p>${article.title}</p>`;
+  card = `<div class='card' ><img class='article-img' src="${article.imageUrl}" alt="Image for the article ${article.title}">`;
+
+  card += `<h2><a href="${article.url}" target="_blank">${article.title}</a></h2>`;
+  
+  card += `<p>${article.summary}</p>`;
+  card += `<span>Sorce: ${article.newsSite}</span></div>`;
+
+  cards.innerHTML += card;
 }
 function convertToJson(res) {
   if (res.ok) {
@@ -26,8 +26,29 @@ function convertToJson(res) {
   }
 }
 
+function searchArticle(text){
+  data = JSON.parse(localStorage.getItem("articles"));
+
+  data.forEach(element => {
+    createCard(element)
+    
+  });
+}
+
 async function getArticles() {
+  let size = 100;
   let start = 0;
+  await fetch(
+    `https://api.spaceflightnewsapi.net/v3/articles?_limit=${size}&_start=${start}`
+  )
+    .then((response) => response.json())
+    .then((data) => {
+      let stringData = JSON.stringify(data);
+      localStorage.setItem("articles", stringData );
+      //search.removeAttribute("disabled");
+    })
+    .catch((error) => notifyUser(error));
+  /*let start = 0;
   localStorage.setItem("articles", "[]");
   let size = 100;
   let count = 2000;
@@ -45,11 +66,11 @@ async function getArticles() {
         localStorage.setItem("articles", storage );
         //search.removeAttribute("disabled");
       })
-      //.then(console.log(allArticles))
+      .then(console.log(allArticles))
       .catch((error) => notifyUser(error));
     start += size;
     if ((count - start) < size) {
       size = count - start -1;
     }
-  }
+  }*/
 }
