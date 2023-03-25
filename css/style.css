@@ -24,3 +24,6 @@ width: 200px;
     grid-template-columns: 1fr 1fr;
     grid-gap: 1rem;
 }
+.search-bar {
+    padding: 1rem;
+}

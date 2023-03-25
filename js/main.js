@@ -1,10 +1,15 @@
 
 let search = document.getElementById("search");
+let searchText = document.getElementById("articleSearch");
 
-search.addEventListener("click", searchArticle('asadsa'));
+search.addEventListener("click", searchArticle);
 
 
 getArticles();
+
+function clearCards(){
+  cards.innerHTML = ""
+}
 
 function createCard(article) {
   let cards = document.getElementById("cards");
@@ -26,15 +31,25 @@ function convertToJson(res) {
   }
 }
 
-function searchArticle(text){
+// Search for articles that include "text" in title
+function searchArticle(){
+
+  //Remove old search
+  clearCards();
+  
+  text = searchText.value.toLowerCase();
   data = JSON.parse(localStorage.getItem("articles"));
 
   data.forEach(element => {
-    createCard(element)
+    if (element.title.toLowerCase().includes(text)){
+      // Create HTML card
+      createCard(element)
+    }
     
   });
 }
 
+// Load the articles from the API
 async function getArticles() {
   let size = 100;
   let start = 0;
