@@ -1,10 +1,11 @@
 let search = document.getElementById("search");
 let searchText = document.getElementById("articleSearch");
 const searchField = document.querySelector("searchField");
+const articleSort = document.getElementById("articleSort");
 
 search.addEventListener("click", searchButtonClicked);
-searchText.addEventListener("change", searchTextChange);
-
+searchText.addEventListener("keyup", searchTextChange);
+articleSort.addEventListener("change", articleSortChange);
 var radios = document.forms["searchFieldForm"].elements["searchField"];
 for (var i = 0, max = radios.length; i < max; i++) {
   radios[i].onclick = function () {
@@ -22,6 +23,9 @@ loadLocalStorage();
 
 getArticles();
 
+function articleSortChange(){
+  localStorage.setItem("articleSort", articleSort.value.toLowerCase());
+}
 function searchTextChange(){
   localStorage.setItem("searchText", searchText.value.toLowerCase());
 }
