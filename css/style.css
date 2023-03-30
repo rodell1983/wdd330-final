@@ -4,6 +4,10 @@ header h1 {
     padding: 1rem;
 }
 
+input, label, option, button {
+    padding: .5rem;
+    margin: .5rem;
+}
 
 .article-img {
 width: 200px;
@@ -21,7 +25,7 @@ width: 200px;
 
 #cards {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr;
     grid-gap: 1rem;
 }
 .search-bar {

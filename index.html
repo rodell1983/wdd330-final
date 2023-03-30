@@ -2,21 +2,48 @@
 <html lang="en">
 
 <head>
-    <title>Space News</title>
     <meta charset="UTF-8">
+    <title>Space News</title>
+    <meta
+      name="description"
+      content="Search space news articles and sort"
+    />
+    
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/med.css">
+    <link rel="stylesheet" href="css/large.css">
 </head>
 <body>
 <header>
     <h1>Space News</h1>
 </header>
 
+
 <div class="search-bar">
     <label for="articleSearch">Search for an Article</label>
     <input type="text" id="articleSearch" value="">
     <button id="search">Search</button>
+    <label for="articleSort">Sort</label>
+    <select id="articleSort">
+        <option value="date">Date</option>
+        <option value="title" selected>Title</title>
+        <option value="source">Source</title>
+        <option value="summary">Source</title>
+    </select>
 </div>
+<fieldset class="adv-search-bar">
+<legend>Search Field</legend>
+<form name="searchFieldForm">
+<input type="radio" id="title" name="searchField" value="title" checked>
+<label for="title">Title</label><br>
+<input type="radio" id="source" name="searchField" value="source">
+<label for="source">Source</label><br>
+<input type="radio" id="summary" name="searchField" value="summary">
+<label for="summary">Summary</label>
+</form>
+</fieldset>
+
 
 <div id="cards">
 
