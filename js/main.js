@@ -1,11 +1,18 @@
+//Variables
 let search = document.getElementById("search");
 let searchText = document.getElementById("articleSearch");
 const searchField = document.querySelector("searchField");
 const articleSort = document.getElementById("articleSort");
+const advancedSearch = document.getElementById('advancedSearch')
 
+
+
+//Events
 search.addEventListener("click", searchButtonClicked);
 searchText.addEventListener("keyup", searchTextChange);
 articleSort.addEventListener("change", articleSortChange);
+advancedSearch.addEventListener('change', toggleAS);
+
 var radios = document.forms["searchFieldForm"].elements["searchField"];
 for (var i = 0, max = radios.length; i < max; i++) {
   radios[i].onclick = function () {
@@ -17,18 +24,62 @@ for (var i = 0, max = radios.length; i < max; i++) {
         localStorage.setItem("searchField", sortForm[i].value);
       }
     }
+    searchArticles();
   };
 }
-loadLocalStorage();
 
-getArticles();
-
-function articleSortChange(){
-  localStorage.setItem("articleSort", articleSort.value.toLowerCase());
+//set/get sort
+e = document.getElementById("articleSort");
+output = e.options[e.selectedIndex].value;
+if (localStorage.getItem("articleSort") !== null) {
+  e.value = localStorage.getItem("articleSort");
+} else {
+  localStorage.setItem("articleSort", output);
 }
-function searchTextChange(){
+
+//set/get field
+let sortForm = document.searchFieldForm;
+
+if (localStorage.getItem("searchField") !== null) {
+  for (var i = 0; i < sortForm.length; i++) {
+    if (sortForm[i].value === localStorage.getItem("searchField")) {
+      sortForm[i].checked = true;
+    } else {
+      sortForm[i].checked = false;
+    }
+  }
+} else {
+  for (var i = 0; i < sortForm.length; i++) {
+    if (sortForm[i].checked) {
+      localStorage.setItem("searchField", sortForm[i].value);
+    }
+  }
+}
+
+//Functions
+function toggleAS(){
+  localStorage.setItem("advancedSearch",advancedSearch.checked)
+  if(advancedSearch.checked){
+    document.querySelector(".sb-sort").classList.remove("hide")
+    document.querySelector(".sb-search-field").classList.remove("hide")
+  }else{
+    document.querySelector(".sb-sort").classList.add("hide")
+    document.querySelector(".sb-search-field").classList.add("hide")
+  }
+}
+function articleSortChange() {
+  localStorage.setItem("articleSort", articleSort.value.toLowerCase());
+  searchArticles();
+}
+function searchTextChange() {
   localStorage.setItem("searchText", searchText.value.toLowerCase());
 }
+// Search for articles that include "text" in title
+function searchButtonClicked() {
+  localStorage.setItem("searchText", searchText.value.toLowerCase());
+  searchArticles();
+}
+
 function loadLocalStorage() {
   //set/get search text
   if (localStorage.getItem("searchText") !== null) {
@@ -41,71 +92,55 @@ function loadLocalStorage() {
     );
   }
 
-  //set/get sort
-  e = document.getElementById("articleSort");
-  output = e.options[e.selectedIndex].value;
-  if (localStorage.getItem("articleSort") !== null) {
-    e.value = localStorage.getItem("articleSort");
-  } else {
-    localStorage.setItem("articleSort", output);
-  }
-
-  //set/get field
-  let sortForm = document.searchFieldForm;
-
-  if (localStorage.getItem("searchField") !== null) {
-    for (var i = 0; i < sortForm.length; i++) {
-      if (sortForm[i].value === localStorage.getItem("searchField")) {
-        sortForm[i].checked = true;
-      } else {
-        sortForm[i].checked = false;
-      }
-    }
-  } else {
-    for (var i = 0; i < sortForm.length; i++) {
-      if (sortForm[i].checked) {
-        localStorage.setItem("searchField", sortForm[i].value);
-      }
-    }
+  if (localStorage.getItem("advancedSearch")!== null){
+    advancedSearch.checked = parseBool(localStorage.getItem("advancedSearch"));
+    toggleAS();
   }
 }
+
 function clearCards() {
   cards.innerHTML = "";
 }
 
 function createCard(article) {
+  const formatedDate = getFormatedDate(article.publishedAt);
+
   let cards = document.getElementById("cards");
 
-  card = `<div class='card' ><img class='article-img' src="${article.imageUrl}" alt="Image for the article ${article.title}">`;
+  card = `<div class='card' ><img class='article-img' src="${article.imageUrl}" onerror="this.src='./images/noimg.jpg'" alt="Image for the article ${article.title}">`;
 
   card += `<h2><a href="${article.url}" target="_blank">${article.title}</a></h2>`;
 
   card += `<p>${article.summary}</p>`;
-  card += `<span>Sorce: ${article.newsSite}</span></div>`;
+  card += `<span>Sorce: ${article.newsSite}</span><span>Published Date: ${formatedDate}</span></div>`;
 
   cards.innerHTML += card;
-}
-function convertToJson(res) {
-  if (res.ok) {
-    return res.json();
-  } else {
-    throw new Error("Bad Response");
-  }
-}
-
-// Search for articles that include "text" in title
-function searchButtonClicked() {
-  localStorage.setItem("searchText", searchText.value.toLowerCase());
-  searchArticles();
 }
 
 // Search for articles with local storage values
 function searchArticles() {
   let data = JSON.parse(localStorage.getItem("articles"));
 
-  let list = [];
   let text = localStorage.getItem("searchText");
   let field = localStorage.getItem("searchField");
+  let sort = localStorage.getItem("articleSort");
+  let list = searchList(data, text, field);
+
+  let sortedList = sortList(list, sort);
+  buildCards(sortedList);
+}
+
+function buildCards(list) {
+  //Remove old search
+  clearCards();
+  list.forEach((element) => {
+    createCard(element);
+  });
+}
+
+// Search json list for text based on field
+function searchList(data, text, field) {
+  let list = [];
 
   data.forEach((element) => {
     switch (field) {
@@ -129,11 +164,11 @@ function searchArticles() {
     }
   });
 
-  sortList(list);
+  return list;
 }
 
-function sortList(list) {
-  let sortField = localStorage.getItem("articleSort");
+// Sort list based on field
+function sortList(list, sortField) {
   const sort_by = (field, reverse, primer) => {
     const key = primer
       ? function (x) {
@@ -152,15 +187,26 @@ function sortList(list) {
 
   list = list.sort(sort_by(sortField), false, (a) => a.toUpperCase());
 
-  buildCards(list);
+  return list;
 }
 
-function buildCards(list) {
-  //Remove old search
-  clearCards();
-  list.forEach((element) => {
-    createCard(element);
-  });
+function getFormatedDate(dateString) {
+  //2023-03-28T13:55:07.000Z
+  dateString = dateString.split("T")[0];
+  let ymd = dateString.split("-");
+  let formated = `${ymd[1]}-${ymd[2]}-${ymd[0]}`;
+
+  return formated;
+}
+
+function parseBool(str){
+  str = str.toLowerCase()
+  if (str=="true")
+  {
+    return true;
+  }else{
+    return false;
+  }
 }
 
 // Load the articles from the API
@@ -178,3 +224,7 @@ async function getArticles() {
     })
     .catch((error) => notifyUser(error));
 }
+
+//Start Program
+getArticles();
+loadLocalStorage();

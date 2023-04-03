@@ -1,56 +1,89 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
+  <head>
+    <meta charset="UTF-8" />
     <title>Space News</title>
-    <meta
-      name="description"
-      content="Search space news articles and sort"
+    <meta name="description" content="Search space news articles and sort" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Oswald&display=swap"
+      rel="stylesheet"
     />
-    
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/med.css">
-    <link rel="stylesheet" href="css/large.css">
-</head>
-<body>
-<header>
-    <h1>Space News</h1>
-</header>
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/med.css" />
+    <link rel="stylesheet" href="css/large.css" />
+  </head>
 
+  <body>
+    <div class="page">
+      <header>
+        <div class="title">
+          <img class="logo" src="images/logo.png" alt="Space News Logo" />
+          <h1>Space News</h1>
+        </div>
 
-<div class="search-bar">
-    <label for="articleSearch">Search for an Article</label>
-    <input type="text" id="articleSearch" value="">
-    <button id="search">Search</button>
-    <label for="articleSort">Sort</label>
-    <select id="articleSort">
-        <option value="date">Date</option>
-        <option value="title" selected>Title</title>
-        <option value="source">Source</title>
-        <option value="summary">Summary</title>
-    </select>
-</div>
-<fieldset class="adv-search-bar">
-<legend>Search Field</legend>
-<form name="searchFieldForm">
-<input type="radio" id="title" name="searchField" value="title" checked>
-<label for="title">Title</label><br>
-<input type="radio" id="source" name="searchField" value="source">
-<label for="source">Source</label><br>
-<input type="radio" id="summary" name="searchField" value="summary">
-<label for="summary">Summary</label>
-</form>
-</fieldset>
+        <div class="search-bar">
+          <div class="sb-Search">
+            <label for="articleSearch">Search for an Article</label>
+            <input type="text" id="articleSearch" value="" />
+            <button id="search">Search</button>
+            <input
+              type="checkbox"
+              id="advancedSearch"
+              name="advancedSearch"
+              value="advancedSearch"
+            />
+            <label for="advancedSearch">Advanced Search</label><br />
+          </div>
 
+          <div class="sb-search-field hide">
+            <form name="searchFieldForm">
+              <fieldset class="adv-search-bar">
+                <legend>Search Field</legend>
 
-<div id="cards">
+                <input
+                  type="radio"
+                  id="title"
+                  name="searchField"
+                  value="title"
+                  checked
+                />
+                <label for="title">Title</label><br />
+                <input
+                  type="radio"
+                  id="source"
+                  name="searchField"
+                  value="source"
+                />
+                <label for="source">Source</label><br />
+                <input
+                  type="radio"
+                  id="summary"
+                  name="searchField"
+                  value="summary"
+                />
+                <label for="summary">Summary</label>
+              </fieldset>
+            </form>
+          </div>
+          <div class="sb-sort hide">
+            <label for="articleSort">Sort</label>
+            <select id="articleSort">
+              <option value="date">Date</option>
+              <option value="title" selected>Title</option>
+              <option value="source">Source</option>
+              <option value="summary">Summary</option>
+            </select>
+          </div>
+        </div>
+      </header>
 
-</div>
-
-</body>
-
-<script src="js/main.js"></script>
-
+      <main>
+        <div id="cards"></div>
+      </main>
+    </div>
+  </body>
+  <script src="js/main.js"></script>
 </html>
