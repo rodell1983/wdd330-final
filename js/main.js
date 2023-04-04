@@ -3,15 +3,13 @@ let search = document.getElementById("search");
 let searchText = document.getElementById("articleSearch");
 const searchField = document.querySelector("searchField");
 const articleSort = document.getElementById("articleSort");
-const advancedSearch = document.getElementById('advancedSearch')
-
-
+const advancedSearch = document.getElementById("advancedSearch");
 
 //Events
 search.addEventListener("click", searchButtonClicked);
 searchText.addEventListener("keyup", searchTextChange);
 articleSort.addEventListener("change", articleSortChange);
-advancedSearch.addEventListener('change', toggleAS);
+advancedSearch.addEventListener("change", toggleAS);
 
 var radios = document.forms["searchFieldForm"].elements["searchField"];
 for (var i = 0, max = radios.length; i < max; i++) {
@@ -57,14 +55,14 @@ if (localStorage.getItem("searchField") !== null) {
 }
 
 //Functions
-function toggleAS(){
-  localStorage.setItem("advancedSearch",advancedSearch.checked)
-  if(advancedSearch.checked){
-    document.querySelector(".sb-sort").classList.remove("hide")
-    document.querySelector(".sb-search-field").classList.remove("hide")
-  }else{
-    document.querySelector(".sb-sort").classList.add("hide")
-    document.querySelector(".sb-search-field").classList.add("hide")
+function toggleAS() {
+  localStorage.setItem("advancedSearch", advancedSearch.checked);
+  if (advancedSearch.checked) {
+    document.querySelector(".sb-sort").classList.remove("hide");
+    document.querySelector(".sb-search-field").classList.remove("hide");
+  } else {
+    document.querySelector(".sb-sort").classList.add("hide");
+    document.querySelector(".sb-search-field").classList.add("hide");
   }
 }
 function articleSortChange() {
@@ -92,7 +90,7 @@ function loadLocalStorage() {
     );
   }
 
-  if (localStorage.getItem("advancedSearch")!== null){
+  if (localStorage.getItem("advancedSearch") !== null) {
     advancedSearch.checked = parseBool(localStorage.getItem("advancedSearch"));
     toggleAS();
   }
@@ -107,7 +105,7 @@ function createCard(article) {
 
   let cards = document.getElementById("cards");
 
-  card = `<div class='card' ><img class='article-img' src="${article.imageUrl}" onerror="this.src='./images/noimg.jpg'" alt="Image for the article ${article.title}">`;
+  card = `<div class='card' ><a href="${article.url}" target="_blank"><img class='article-img' src="${article.imageUrl}" onerror="this.src='./images/noimg.jpg'" alt="Image for the article ${article.title}"></a>`;
 
   card += `<h2><a href="${article.url}" target="_blank">${article.title}</a></h2>`;
 
@@ -199,12 +197,11 @@ function getFormatedDate(dateString) {
   return formated;
 }
 
-function parseBool(str){
-  str = str.toLowerCase()
-  if (str=="true")
-  {
+function parseBool(str) {
+  str = str.toLowerCase();
+  if (str == "true") {
     return true;
-  }else{
+  } else {
     return false;
   }
 }
