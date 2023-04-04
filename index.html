@@ -30,7 +30,7 @@
             <input type="text" id="articleSearch" value="" />
             <button id="search">Search</button>
             <input
-            class="option-input checkbox"
+              class="option-input checkbox"
               type="checkbox"
               id="advancedSearch"
               name="advancedSearch"
@@ -38,48 +38,49 @@
             />
             <label for="advancedSearch">Advanced Search</label><br />
           </div>
+          <div class="adv-search-bar hide">
+            <div class="sb-search-field">
+              <form name="searchFieldForm">
+                <fieldset class="adv-search-opt">
+                  <legend>Search Field</legend>
 
-          <div class="sb-search-field hide">
-            <form name="searchFieldForm">
-              <fieldset class="adv-search-bar">
-                <legend>Search Field</legend>
-
-                <input
-                class="option-input radio"
-                  type="radio"
-                  id="title"
-                  name="searchField"
-                  value="title"
-                  checked
-                />
-                <label for="title">Title</label><br />
-                <input
-                class="option-input radio"
-                  type="radio"
-                  id="source"
-                  name="searchField"
-                  value="source"
-                />
-                <label for="source">Source</label><br />
-                <input
-                class="option-input radio"
-                  type="radio"
-                  id="summary"
-                  name="searchField"
-                  value="summary"
-                />
-                <label for="summary">Summary</label>
-              </fieldset>
-            </form>
-          </div>
-          <div class="sb-sort hide">
-            <label for="articleSort">Sort</label>
-            <select id="articleSort">
-              <option value="date">Date</option>
-              <option value="title" selected>Title</option>
-              <option value="source">Source</option>
-              <option value="summary">Summary</option>
-            </select>
+                  <input
+                    class="option-input radio"
+                    type="radio"
+                    id="title"
+                    name="searchField"
+                    value="title"
+                    checked
+                  />
+                  <label for="title">Title</label><br />
+                  <input
+                    class="option-input radio"
+                    type="radio"
+                    id="source"
+                    name="searchField"
+                    value="source"
+                  />
+                  <label for="source">Source</label><br />
+                  <input
+                    class="option-input radio"
+                    type="radio"
+                    id="summary"
+                    name="searchField"
+                    value="summary"
+                  />
+                  <label for="summary">Summary</label>
+                </fieldset>
+              </form>
+            </div>
+            <div class="sb-sort">
+              <label for="articleSort">Sort</label>
+              <select id="articleSort">
+                <option value="date">Date</option>
+                <option value="title" selected>Title</option>
+                <option value="source">Source</option>
+                <option value="summary">Summary</option>
+              </select>
+            </div>
           </div>
         </div>
       </header>

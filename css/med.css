@@ -4,5 +4,9 @@
         grid-template-columns: 1fr 1fr;
         grid-gap: 1rem;
     }
+    .adv-search-opt{
+        display: flex;
+        flex-wrap: wrap;
+    }
 
 }

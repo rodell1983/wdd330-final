@@ -58,11 +58,9 @@ if (localStorage.getItem("searchField") !== null) {
 function toggleAS() {
   localStorage.setItem("advancedSearch", advancedSearch.checked);
   if (advancedSearch.checked) {
-    document.querySelector(".sb-sort").classList.remove("hide");
-    document.querySelector(".sb-search-field").classList.remove("hide");
+    document.querySelector(".adv-search-bar").classList.remove("hide");
   } else {
-    document.querySelector(".sb-sort").classList.add("hide");
-    document.querySelector(".sb-search-field").classList.add("hide");
+    document.querySelector(".adv-search-bar").classList.add("hide");
   }
 }
 function articleSortChange() {
@@ -139,32 +137,40 @@ function buildCards(list) {
 // Search json list for text based on field
 function searchList(data, text, field) {
   let list = [];
+  let words = text.split(" ");
 
   data.forEach((element) => {
     switch (field) {
       case "title":
-        if (element.title.toLowerCase().includes(text)) {
+        if (containsAllWords(words, element.title)) {
           list.push(element);
         }
         break;
       case "summary":
-        if (element.summary.toLowerCase().includes(text)) {
+        if (containsAllWords(words, element.summary)) {
           list.push(element);
         }
         break;
       case "source":
-        if (element.newsSite.toLowerCase().includes(text)) {
+        if (containsAllWords(words, element.newsSite)) {
           list.push(element);
         }
         break;
       default:
-      // code block
     }
   });
 
   return list;
 }
-
+function containsAllWords(words, text) {
+  for (var i = 0; i != words.length; i++) {
+    var word = words[i];
+    if (!text.toLowerCase().includes(word.toLowerCase())) {
+      return false;
+    }
+  }
+  return true;
+}
 // Sort list based on field
 function sortList(list, sortField) {
   const sort_by = (field, reverse, primer) => {
