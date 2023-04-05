@@ -1,6 +1,6 @@
 import * as ui from "./ui.js";
 import { searchArticles } from './search.js';
-import
+
 
 //Variables
 export let likedArticles = [];
