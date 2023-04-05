@@ -46,6 +46,7 @@ button:hover {
 
 fieldset {
   width: max-content;
+  margin: 0 0.5rem 0.5rem 0.5rem;
 }
 
 .title {
@@ -73,6 +74,10 @@ fieldset {
 
 .liked-btn:hover {
   background-color: lightgray;
+}
+
+#card-count {
+  width: 4em;
 }
 
 .search-bar {

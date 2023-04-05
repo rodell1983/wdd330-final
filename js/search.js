@@ -10,6 +10,7 @@ export function searchArticles() {
   let sortedList = sortList(list, sort);
   return sortedList;
 }
+
 // Sort list based on field
 export function sortList(list, sortField) {
   const sort_by = (field, reverse, primer) => {
@@ -32,6 +33,7 @@ export function sortList(list, sortField) {
 
   return list;
 }
+
 // Search json list for text based on field
 export function searchList(data, text, field) {
   let list = [];
@@ -61,6 +63,7 @@ export function searchList(data, text, field) {
   return list;
 }
 
+// Validate if all words in text
 export function containsAllWords(words, text) {
   for (var i = 0; i != words.length; i++) {
     var word = words[i];

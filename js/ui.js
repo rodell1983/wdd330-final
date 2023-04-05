@@ -1,6 +1,10 @@
 import * as main from "./main.js";
 
+
+// Create heart template
 export function createHeart(id) {
+
+  // Check liked hearts
   let checked = false;
   for (var i = 0; i != main.likedArticles.length; i++) {
     let id = main.likedArticles[i].split("id")[1];
@@ -10,6 +14,7 @@ export function createHeart(id) {
     }
   }
 
+  //Build template
   let heart = `<input type="checkbox" class="likebtn" id="id${id}"`;
   if (checked) {
     heart += " checked/>";
@@ -63,6 +68,8 @@ export function createHeart(id) {
 
   return heart;
 }
+
+//Create card and add to cards on page
 export function createCard(article) {
   const formatedDate = main.getFormatedDate(article.publishedAt);
   let heart = createHeart(article.id);
@@ -79,15 +86,32 @@ export function createCard(article) {
   cards.innerHTML += card;
 }
 
+// Clear all cards on page
 export function clearCards() {
   let cards = document.querySelector("#cards");
   cards.innerHTML = "";
 }
 export function buildCards(list) {
+  //Default limit 20
+  let limit = 20;
+
+  //Get saved limit
+  if (localStorage.getItem("card-count") != null){
+    limit = parseInt(localStorage.getItem("card-count"));
+  }
+
   //Remove old search
   clearCards();
+
+  //Build cards
   list.forEach((element) => {
-    createCard(element);
+    if (limit <= 0){
+      return;
+    }else{
+      createCard(element);
+    }
+    limit--;
+    
   });
 
   //add heart events

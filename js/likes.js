@@ -2,6 +2,7 @@ import * as ui from "./ui.js";
 import { likedArticles } from "./main.js";
 import * as api from "./api.js";
 
+// Load likes from local storage and build cards
 async function loadLikes() {
   //Exit if no articles
   if (likedArticles.length <= 0) {

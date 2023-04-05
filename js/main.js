@@ -8,12 +8,14 @@ export let searchText = document.getElementById("articleSearch");
 export const searchField = document.querySelector("searchField");
 export const articleSort = document.getElementById("articleSort");
 export const advancedSearch = document.getElementById("advancedSearch");
+export const cardCount = document.getElementById("card-count");
 
 //Events
 search.addEventListener("click", searchButtonClicked);
 searchText.addEventListener("keyup", searchTextChange);
 articleSort.addEventListener("change", articleSortChange);
 advancedSearch.addEventListener("change", toggleAS);
+cardCount.addEventListener("change", cardCountChange);
 
 var radios = document.forms["searchFieldForm"].elements["searchField"];
 for (var i = 0, max = radios.length; i < max; i++) {
@@ -58,6 +60,7 @@ if (localStorage.getItem("searchField") !== null) {
   }
 }
 
+//Heart click function
 export function heartClick(id) {
   let el = document.getElementById(id);
   if (el.checked) {
@@ -70,7 +73,7 @@ export function heartClick(id) {
   }
 }
 
-//Functions
+//Event Functions
 function toggleAS() {
   localStorage.setItem("advancedSearch", advancedSearch.checked);
   if (advancedSearch.checked) {
@@ -91,7 +94,11 @@ function searchButtonClicked() {
   localStorage.setItem("searchText", searchText.value.toLowerCase());
   ui.buildCards(searchArticles());
 }
+function cardCountChange(){
+  localStorage.setItem("card-count", cardCount.value);
+}
 
+//Load local Storage
 function loadLocalStorage() {
   //set/get search text
   if (localStorage.getItem("searchText") !== null) {
@@ -114,19 +121,14 @@ function loadLocalStorage() {
   if (localStorage.getItem("liked") !== null) {
     likedArticles = localStorage.getItem("liked").split(",");
   }
-}
-
-/*
-async function loadLiked() {
-  for (var i = 0; i != likedArticles.length; i++) {
-    var id = likedArticles[i].split('id')[1];
-    let article = await getArticle(id);
-    createCard(JSON.parse(article));
-    document.getElementById(id).checked = true;
+  if (localStorage.getItem("card-count") !== null) {
+    cardCount.value = parseInt(localStorage.getItem("card-count"));
   }
-}
-*/
 
+  // load card count
+}
+
+//Formate to Month, Day, Year
 export function getFormatedDate(dateString) {
   //2023-03-28T13:55:07.000Z
   try {
@@ -140,6 +142,7 @@ export function getFormatedDate(dateString) {
   }
 }
 
+//Convert string to bool
 export function parseBool(str) {
   str = str.toLowerCase();
   if (str == "true") {

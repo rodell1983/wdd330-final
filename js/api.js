@@ -39,6 +39,7 @@ export async function getArticle(id) {
   return article;
 }
 
+// Check for valid json
 export function validRes(text) {
   try {
     const json = JSON.parse(text);
@@ -49,5 +50,4 @@ export function validRes(text) {
 }
 
 //Start Program
-
 getArticles();
