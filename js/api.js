@@ -1,6 +1,6 @@
 import { parseBool } from './search.js';
 // Load the articles from the API
-async function getArticles() {
+export async function getArticles() {
   let size = 100;
   let start = 0;
   await fetch(
@@ -15,7 +15,7 @@ async function getArticles() {
     .catch((error) => notifyUser(error));
 }
 // Load the articles by id from the API
-async function getArticle(id) {
+export async function getArticle(id) {
   let article = "";
   await fetch(`https://api.spaceflightnewsapi.net/v3/articles/${id}`)
     .then((response) => response.json())
