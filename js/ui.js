@@ -79,8 +79,6 @@ export function createCard(article) {
   card += `<span>Sorce: ${article.newsSite}</span><span>Published Date: ${formatedDate}</span><div class="close">${heart}</div></div>`;
 
   cards.innerHTML += card;
-  let el = document.getElementById(`id${article.id}`);
-  el.addEventListener("click",function() {alert("t");},true);
 }
 
 export function clearCards() {
