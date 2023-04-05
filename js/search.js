@@ -1,7 +1,7 @@
 import { sortList } from './main.js';
 
 // Search for articles with local storage values
-function searchArticles() {
+export function searchArticles() {
   let data = JSON.parse(localStorage.getItem("articles"));
 
   let text = localStorage.getItem("searchText");
