@@ -27,7 +27,7 @@ for (var i = 0, max = radios.length; i < max; i++) {
         localStorage.setItem("searchField", sortForm[i].value);
       }
     }
-    searchArticles();
+    ui.buildCards(searchArticles());
   };
 }
 
@@ -59,6 +59,18 @@ if (localStorage.getItem("searchField") !== null) {
   }
 }
 
+export function heartClick(id) {
+  let el = document.getElementById(id);
+  if (el.checked) {
+    likedArticles.push(id);
+    localStorage.setItem("liked", likedArticles);
+  } else {
+    //remove id
+    likedArticles = likedArticles.filter((item) => item != id);
+    localStorage.setItem("liked", likedArticles);
+  }
+}
+
 //Functions
 function toggleAS() {
   localStorage.setItem("advancedSearch", advancedSearch.checked);
@@ -78,7 +90,7 @@ function searchTextChange() {
 // Search for articles that include "text" in title
 function searchButtonClicked() {
   localStorage.setItem("searchText", searchText.value.toLowerCase());
-  searchArticles();
+  ui.buildCards(searchArticles());
 }
 
 function loadLocalStorage() {
@@ -116,82 +128,6 @@ async function loadLiked() {
 }
 */
 
-
-function heartClick(id) {
-  let el = document.getElementById(id);
-  if (el.checked) {
-    likedArticles.push(`id${id}`);
-    localStorage.setItem("liked", likedArticles);
-  } else {
-    //remove id
-    likedArticles = likedArticles.filter((item) => item != `id${id}`);
-    localStorage.setItem("liked", likedArticles);
-  }
-}
-
-
-
-
-// Search json list for text based on field
-export function searchList(data, text, field) {
-  let list = [];
-  let words = text.split(" ");
-
-  data.forEach((element) => {
-    switch (field) {
-      case "title":
-        if (containsAllWords(words, element.title)) {
-          list.push(element);
-        }
-        break;
-      case "summary":
-        if (containsAllWords(words, element.summary)) {
-          list.push(element);
-        }
-        break;
-      case "source":
-        if (containsAllWords(words, element.newsSite)) {
-          list.push(element);
-        }
-        break;
-      default:
-    }
-  });
-
-  return list;
-}
-export function containsAllWords(words, text) {
-  for (var i = 0; i != words.length; i++) {
-    var word = words[i];
-    if (!text.toLowerCase().includes(word.toLowerCase())) {
-      return false;
-    }
-  }
-  return true;
-}
-// Sort list based on field
-export function sortList(list, sortField) {
-  const sort_by = (field, reverse, primer) => {
-    const key = primer
-      ? function (x) {
-          return primer(x[field]);
-        }
-      : function (x) {
-          return x[field];
-        };
-
-    reverse = !reverse ? 1 : -1;
-
-    return function (a, b) {
-      return (a = key(a)), (b = key(b)), reverse * ((a > b) - (b > a));
-    };
-  };
-
-  list = list.sort(sort_by(sortField), false, (a) => a.toUpperCase());
-
-  return list;
-}
-
 export function getFormatedDate(dateString) {
   //2023-03-28T13:55:07.000Z
   dateString = dateString.split("T")[0];
@@ -209,5 +145,9 @@ export function parseBool(str) {
     return false;
   }
 }
+
+
+loadLocalStorage();
+
 
 
