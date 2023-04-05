@@ -1,6 +1,5 @@
 import * as ui from "./ui.js";
-import { searchArticles } from './search.js';
-
+import { searchArticles } from "./search.js";
 
 //Variables
 export let likedArticles = [];
@@ -130,11 +129,15 @@ async function loadLiked() {
 
 export function getFormatedDate(dateString) {
   //2023-03-28T13:55:07.000Z
-  dateString = dateString.split("T")[0];
-  let ymd = dateString.split("-");
-  let formated = `${ymd[1]}-${ymd[2]}-${ymd[0]}`;
+  try {
+    dateString = dateString.split("T")[0];
+    let ymd = dateString.split("-");
+    let formated = `${ymd[1]}-${ymd[2]}-${ymd[0]}`;
 
-  return formated;
+    return formated;
+  } catch {
+    return "";
+  }
 }
 
 export function parseBool(str) {
@@ -146,8 +149,4 @@ export function parseBool(str) {
   }
 }
 
-
 loadLocalStorage();
-
-
-

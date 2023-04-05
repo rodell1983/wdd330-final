@@ -8,5 +8,8 @@
         display: flex;
         flex-wrap: wrap;
     }
+    input{
+        font-size: 1rem;
+      }
 
 }

@@ -1,7 +1,5 @@
 import * as main from "./main.js";
 
-
-
 export function createHeart(id) {
   let checked = false;
   for (var i = 0; i != main.likedArticles.length; i++) {
@@ -19,7 +17,7 @@ export function createHeart(id) {
     heart += " />";
   }
 
-  heart += `<label for="id${id}">
+  heart += `<label aria-label="id${id}" for="id${id}">
         <svg class="heart-svg" viewBox="467 392 58 57">
           <g id="Group" fill="none" fill-rule="evenodd" transform="translate(467 392)">
             <path id="heart" d="M29.144 20.773c-.063-.13-4.227-8.67-11.44-2.59C7.63 28.795 28.94 43.256 29.143 43.394c.204-.138 21.513-14.6 11.44-25.213-7.214-6.08-11.377 2.46-11.44 2.59z" fill="#AAB8C2"/>
@@ -84,28 +82,6 @@ export function createCard(article) {
 export function clearCards() {
   let cards = document.querySelector("#cards");
   cards.innerHTML = "";
-  /*
-    let savedCards = [];
-    for (var i = 0; i != cards.length; i++) {
-      let save = false;
-      let card = cards[i];
-      for (var j = 0; j != main.likedArticles.length; j++) {
-  
-        let id = `#${main.likedArticles[j]}`;
-        if (card.querySelector(id) !== null) {
-          save = true;
-          break;
-        }
-      }
-      if (!save) {
-        savedCards.push(card);
-      }
-    }
-    cards.innerHTML = "";
-    for (var i = 0; i != savedCards.length; i++) {
-      cards.innerHTML = savedCards[i].innerHTML;
-    }
-    */
 }
 export function buildCards(list) {
   //Remove old search
@@ -114,21 +90,25 @@ export function buildCards(list) {
     createCard(element);
   });
 
-  //add heart events 
-  
+  //add heart events
+
   let hearts = document.getElementsByClassName("likebtn");
-  for(var i=0; i != hearts.length; i++ ){
+  for (var i = 0; i != hearts.length; i++) {
     let id = hearts[i].id;
-    hearts[i].addEventListener("click",function() {main.heartClick(id);},true);
+    hearts[i].addEventListener(
+      "click",
+      function () {
+        main.heartClick(id);
+      },
+      true
+    );
   }
 
   //Check liked
-  for(var i=0; i != main.likedArticles.length; i++ ){
+  for (var i = 0; i != main.likedArticles.length; i++) {
     let el = document.getElementById(main.likedArticles[i]);
-    if(el !== null){
+    if (el !== null) {
       el.checked = true;
     }
   }
- 
 }
-

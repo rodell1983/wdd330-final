@@ -2,8 +2,8 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <title>Space News</title>
-    <meta name="description" content="Search space news articles and sort" />
+    <title>Space News - Liked Articles</title>
+    <meta name="description" content="Search space news articles and sort - Liked Articles" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -11,30 +11,27 @@
       href="https://fonts.googleapis.com/css2?family=Oswald&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="css/style.css" />
-    <link rel="stylesheet" href="css/med.css" />
-    <link rel="stylesheet" href="css/large.css" />
-    <script type="module" src="js/ui.js"></script>
-    <script type="module" src="js/api.js"></script>
-    <script type="module" src="js/search.js"></script>
-    <script type="module" src="js/main.js"></script>
+    <link rel="stylesheet" href="../css/style.css" />
+    <link rel="stylesheet" href="../css/med.css" />
+    <link rel="stylesheet" href="../css/large.css" />
+    <script type="module" src="../js/likes.js"></script>
   </head>
 
   <body>
     <div class="page">
       <header>
         <div class="title">
-          <img class="logo" src="images/logo.png" alt="Space News Logo" />
+          <a href="../index.html"
+            ><img class="logo" src="../images/logo.png" alt="Space News Logo"
+          /></a>
           <h1>Space News</h1>
         </div>
-
-        <a href="./views/liked.html"
+        <a href="../index.html"
           ><div class="liked-btn">
-            <span>Liked Articles</span>
+            <span>Home</span>
           </div></a
         >
-
-        <div class="search-bar">
+        <div class="search-bar hide">
           <div class="sb-Search">
             <label for="articleSearch">Search for an Article</label>
             <input type="text" id="articleSearch" value="" />

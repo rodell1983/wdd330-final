@@ -1,4 +1,3 @@
-
 // Search for articles with local storage values
 export function searchArticles() {
   let data = JSON.parse(localStorage.getItem("articles"));

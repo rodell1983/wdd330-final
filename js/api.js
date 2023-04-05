@@ -1,4 +1,3 @@
-
 // Load the articles from the API
 export async function getArticles() {
   let size = 100;
@@ -18,13 +17,35 @@ export async function getArticles() {
 export async function getArticle(id) {
   let article = "";
   await fetch(`https://api.spaceflightnewsapi.net/v3/articles/${id}`)
+    .then((response) => {
+      var contentType = response.headers.get("content-type");
+      if (contentType && contentType.includes("application/json")) {
+        return response.json();
+      }
+      throw new TypeError("Sorry, There's no JSON here!");
+    })
+    .then((jsonifiedResponse) => {
+      article = JSON.stringify(jsonifiedResponse);
+    })
+    .catch((error) => console.log(error));
+  /*
     .then((response) => response.json())
     .then((data) => {
       article = JSON.stringify(data);
     })
     .catch((error) => notifyUser(error));
+    */
 
   return article;
+}
+
+export function validRes(text) {
+  try {
+    const json = JSON.parse(text);
+    return json;
+  } catch (err) {
+    throw new Error("Did not receive JSON, instead received: " + text);
+  }
 }
 
 //Start Program
