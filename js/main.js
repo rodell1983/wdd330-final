@@ -30,7 +30,7 @@ for (var i = 0, max = radios.length; i < max; i++) {
 }
 
 //set/get sort
-e = document.getElementById("articleSort");
+var e = document.getElementById("articleSort");
 output = e.options[e.selectedIndex].value;
 if (localStorage.getItem("articleSort") !== null) {
   e.value = localStorage.getItem("articleSort");

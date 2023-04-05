@@ -1,4 +1,4 @@
-import { parseBool } from './search.js';
+
 // Load the articles from the API
 export async function getArticles() {
   let size = 100;
