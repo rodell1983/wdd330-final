@@ -1,6 +1,6 @@
 body {
   font-family: "Oswald", sans-serif;
-  min-width: 270px;
+  min-width: 345px;
 }
 header,
 footer {
@@ -93,6 +93,13 @@ fieldset {
 .adv-search-opt {
   display: flex;
   flex-wrap: wrap;
+}
+.adv-search-bar{
+  margin-top: 1rem;
+}
+
+.sb-count label, .sb-sort label{
+  margin-left: 1rem;
 }
 
 .article-img {
